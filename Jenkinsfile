@@ -5,7 +5,11 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/your-username/bookmyshow-ci-cd.git'
+                stage('Checkout') {
+    steps {
+        git 'https://github.com/zuber383/capstone-project-1.git'
+    }
+}
             }
         }
 
