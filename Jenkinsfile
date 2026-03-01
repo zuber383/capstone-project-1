@@ -3,38 +3,28 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Build Docker Image') {
             steps {
-                stage('Checkout') {
-    steps {
-        git 'https://github.com/zuber383/capstone-project-1.git'
-    }
-}
-            }
-        }
-
-        stage('Build Image') {
-            steps {
-                bat 'docker build -t bookmyshow-app .'
+                bat 'docker build -t capstone-app .'
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'docker run bookmyshow-app pytest'
+                bat 'docker run --rm capstone-app'
             }
         }
 
-        stage('Deploy App') {
+        stage('Deploy Application') {
             steps {
-                bat 'docker run -d -p 8081:80 bookmyshow-app'
+                bat 'docker run -d -p 8081:80 capstone-app'
             }
         }
     }
 
     post {
         always {
-            bat 'docker ps -aq | xargs docker rm -f'
+            bat 'docker ps -aq | docker rm -f'
         }
     }
 }
